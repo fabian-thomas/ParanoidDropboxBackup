@@ -5,20 +5,19 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MAB.DotIgnore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ParanoidDropboxBackup.App;
 using ParanoidDropboxBackup.Authentication;
-using ParanoidDropboxBackup.Graph;
+using ParanoidDropboxBackup.Dropbox;
 
 namespace ParanoidDropboxBackup
 {
     public class BackupService : BackgroundService
     {
-
-        public BackupService(IHostApplicationLifetime hostApplicationLifetime, ILogger<BackupService> logger, IConfiguration config)
+        public BackupService(IHostApplicationLifetime hostApplicationLifetime, ILogger<BackupService> logger,
+            IConfiguration config)
         {
             AppData.Logger = logger;
             AppData.Lifetime = hostApplicationLifetime;
@@ -30,35 +29,34 @@ namespace ParanoidDropboxBackup
         {
             try
             {
-                AppData.Logger.LogDebug("authing");
-
                 // Authentication
-                var tokenCacheHelper = new TokenCacheHelper<BackupService>(Constants.TokenCacheFilePath);
-                var authProvider = new DeviceCodeAuthProvider<BackupService>(AppData.DropboxApiConfig.ClientId, AppData.DropboxApiConfig.Scopes, tokenCacheHelper);
-                var authenticated = await authProvider.InitializeAuthentication();
+                var token = new CachedAuthHelper(AppData.DropboxApiConfig.AppKey, Constants.TokenCacheFilePath,
+                    AppData.Protector).GetAuthToken();
 
                 AppData.Logger.LogDebug("after authing");
 
                 // Backup
-                if (!ct.IsCancellationRequested && authenticated)
-                {
+                if (!ct.IsCancellationRequested)
                     try
                     {
                         Directory.CreateDirectory(AppData.BackupConfig.Path);
                         DeleteOldestFolders(AppData.BackupConfig.Path, AppData.BackupConfig.RemainMaximum, ct);
                         if (!ct.IsCancellationRequested)
                         {
-                            // directly info class is used to normalize slashes in path
-                            var graphHelper = new GraphHelper(authProvider, ct, new DirectoryInfo(Path.Combine(AppData.BackupConfig.Path, GetBackupDirectoryName())).FullName, AppData.BackupConfig.MaxParallelDownloadTasks,
-                                AppData.BackupConfig.ProgressReporting.ProgressReportingSteps, AppData.BackupConfig.ProgressReporting.Enabled);
-                            await graphHelper.DownloadAll();
+                            // directory info class is used to normalize slashes in path
+                            var dropboxHelper = new DropboxHelper(token, ct,
+                                new DirectoryInfo(Path.Combine(AppData.BackupConfig.Path, GetBackupDirectoryName()))
+                                    .FullName, AppData.BackupConfig.MaxParallelDownloadTasks,
+                                AppData.BackupConfig.ProgressReporting.ProgressReportingSteps,
+                                AppData.BackupConfig.ProgressReporting.Enabled);
+                            await dropboxHelper.DownloadAll();
                         }
                     }
                     catch (IOException ex)
                     {
-                        AppData.Logger.LogCritical("Could not access or create backup folder \"{0}\"\n", AppData.BackupConfig.Path, ex);
+                        AppData.Logger.LogCritical("Could not access or create backup folder \"{0}\"\n",
+                            AppData.BackupConfig.Path, ex);
                     }
-                }
             }
             catch (Exception ex)
             {
@@ -75,7 +73,6 @@ namespace ParanoidDropboxBackup
             var dirs = Directory.GetDirectories(path).Select(Path.GetFileName);
             var dirDict = new SortedDictionary<string, DateTime>();
             foreach (var dir in dirs)
-            {
                 try
                 {
                     if (DateTime.TryParse(ParseBackupDirectoryName(dir), out var d))
@@ -83,9 +80,9 @@ namespace ParanoidDropboxBackup
                 }
                 catch (Exception)
                 {
-                    AppData.Logger.LogWarning("Could not parse suffix of directory {0} to date. Ignoring this directory.", dir);
+                    AppData.Logger.LogWarning(
+                        "Could not parse suffix of directory {0} to date. Ignoring this directory.", dir);
                 }
-            }
 
             var removed = 0;
             var dirCount = dirDict.Count;
@@ -117,7 +114,8 @@ namespace ParanoidDropboxBackup
 
         private string GetBackupDirectoryName()
         {
-            var s = DateTime.Now.ToString("u", CultureInfo.CreateSpecificCulture("en-US")).Replace(':', '-').Replace(' ', '_');
+            var s = DateTime.Now.ToString("u", CultureInfo.CreateSpecificCulture("en-US")).Replace(':', '-')
+                .Replace(' ', '_');
             return Constants.BackupDirPrefix + s.Remove(s.Length - 1);
         }
     }
