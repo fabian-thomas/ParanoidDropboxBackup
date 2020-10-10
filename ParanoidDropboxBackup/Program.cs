@@ -2,14 +2,14 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ParanoidOneDriveBackup.App;
 using System;
 using System.IO;
 using System.Reflection;
 using MAB.DotIgnore;
 using Microsoft.Extensions.FileProviders;
+using ParanoidDropboxBackup.App;
 
-namespace ParanoidOneDriveBackup
+namespace ParanoidDropboxBackup
 {
     internal static class Program
     {

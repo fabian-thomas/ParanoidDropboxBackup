@@ -2,9 +2,9 @@ using System.IO;
 using System.Security.Cryptography;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
-using ParanoidOneDriveBackup.App;
+using ParanoidDropboxBackup.App;
 
-namespace ParanoidOneDriveBackup.Authentication
+namespace ParanoidDropboxBackup.Authentication
 {
     public class TokenCacheHelper<T> // taken from https://docs.microsoft.com/de-de/azure/active-directory/develop/msal-net-token-cache-serialization
     {
@@ -34,7 +34,7 @@ namespace ParanoidOneDriveBackup.Authentication
                 }
                 catch (CryptographicException)
                 {
-                    AppData.Logger.LogWarning("MSAL token cache is invalid. Removing cache file. You need to reauthenticate.");
+                    AppData.Logger.LogWarning("Token cache is invalid. Removing cache file. You need to reauthenticate.");
                 }
             }
         }

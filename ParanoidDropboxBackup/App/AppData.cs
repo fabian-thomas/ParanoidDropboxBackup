@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ParanoidOneDriveBackup.App.Configuration;
+using ParanoidDropboxBackup.App.Configuration;
 
-namespace ParanoidOneDriveBackup.App
+namespace ParanoidDropboxBackup.App
 {
     internal static class AppData
     {
-        public static readonly MsGraphConfig MsGraphConfig = new MsGraphConfig();
+        public static readonly DropboxApiConfig DropboxApiConfig = new DropboxApiConfig();
         public static readonly BackupConfig BackupConfig = new BackupConfig();
         public static IHostApplicationLifetime Lifetime;
         public static IDataProtector Protector;
@@ -18,7 +18,7 @@ namespace ParanoidOneDriveBackup.App
 
         public static void BindConfig(IConfiguration config)
         {
-            config.Bind(Helper.GetDescription(typeof(MsGraphConfig)), MsGraphConfig);
+            config.Bind(Helper.GetDescription(typeof(DropboxApiConfig)), DropboxApiConfig);
             config.Bind(Helper.GetDescription(typeof(BackupConfig)), BackupConfig);
 
 

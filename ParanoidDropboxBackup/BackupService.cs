@@ -9,11 +9,11 @@ using MAB.DotIgnore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using ParanoidOneDriveBackup.App;
-using ParanoidOneDriveBackup.Authentication;
-using ParanoidOneDriveBackup.Graph;
+using ParanoidDropboxBackup.App;
+using ParanoidDropboxBackup.Authentication;
+using ParanoidDropboxBackup.Graph;
 
-namespace ParanoidOneDriveBackup
+namespace ParanoidDropboxBackup
 {
     public class BackupService : BackgroundService
     {
@@ -34,7 +34,7 @@ namespace ParanoidOneDriveBackup
 
                 // Authentication
                 var tokenCacheHelper = new TokenCacheHelper<BackupService>(Constants.TokenCacheFilePath);
-                var authProvider = new DeviceCodeAuthProvider<BackupService>(AppData.MsGraphConfig.ClientId, AppData.MsGraphConfig.Scopes, tokenCacheHelper);
+                var authProvider = new DeviceCodeAuthProvider<BackupService>(AppData.DropboxApiConfig.ClientId, AppData.DropboxApiConfig.Scopes, tokenCacheHelper);
                 var authenticated = await authProvider.InitializeAuthentication();
 
                 AppData.Logger.LogDebug("after authing");

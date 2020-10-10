@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
-using ParanoidOneDriveBackup.App;
+using ParanoidDropboxBackup.App;
 
-namespace ParanoidOneDriveBackup.Authentication
+namespace ParanoidDropboxBackup.Authentication
 {
     public class DeviceCodeAuthProvider<T> : IAuthenticationProvider
     {

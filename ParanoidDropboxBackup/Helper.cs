@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace ParanoidOneDriveBackup
+namespace ParanoidDropboxBackup
 {
     internal static class Helper
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace ParanoidOneDriveBackup.App.Configuration
+namespace ParanoidDropboxBackup.App.Configuration
 {
     [Description("Backup")]
     internal class BackupConfig

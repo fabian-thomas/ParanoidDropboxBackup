@@ -5,11 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Graph;
-using ParanoidOneDriveBackup.App;
+using ParanoidDropboxBackup.App;
 using Directory = System.IO.Directory;
 using File = System.IO.File;
 
-namespace ParanoidOneDriveBackup.Graph
+namespace ParanoidDropboxBackup.Graph
 {
     public class GraphHelper
     {

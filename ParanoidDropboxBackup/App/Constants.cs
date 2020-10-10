@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 
-namespace ParanoidOneDriveBackup.App
+namespace ParanoidDropboxBackup.App
 {
     internal static class Constants
     {
-        public const string AppTitle = "ParanoidOneDriveBackup";
+        public const string AppTitle = "ParanoidDropboxBackup";
 
         public const string ConfigFileName = "config.json";
 
@@ -13,11 +13,11 @@ namespace ParanoidOneDriveBackup.App
 
         private const string TokenCacheFileName = "token_cache.bin3";
 
-        public const string BackupDirPrefix = "OneDrive_";
+        public const string BackupDirPrefix = "Dropbox_";
 
         /*
-         * Linux: home/<user>/.config/ParanoidOneDriveBackup
-         * Windows: %localappdata%/ParanoidOneDriveBackup
+         * Linux: home/<user>/.config/ParanoidDropboxBackup
+         * Windows: %localappdata%/ParanoidDropboxBackup
          */
         public static string AppDataFolderPath =>
             Path.Combine(
@@ -30,8 +30,8 @@ namespace ParanoidOneDriveBackup.App
         public static string IgnoreFilePath => Path.Combine(AppDataFolderPath, IgnoreFileName);
 
         /*
-         * Linux: home/<user>/.cache/ParanoidOneDriveBackup
-         * Windows: %localappdata%/ParanoidOneDriveBackup
+         * Linux: home/<user>/.cache/ParanoidDropboxBackup
+         * Windows: %localappdata%/ParanoidDropboxBackup
          */
         private static string CacheFolderPath
         {

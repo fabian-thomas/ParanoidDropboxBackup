@@ -1,4 +1,4 @@
-﻿namespace ParanoidOneDriveBackup.App.Configuration
+﻿namespace ParanoidDropboxBackup.App.Configuration
 {
     internal class ProgressReporting
     {
