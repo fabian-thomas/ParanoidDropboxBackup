@@ -1,5 +1,5 @@
 [Unit]
-Description=ParanoidOneDriveBackup Timer
+Description=ParanoidDropboxBackup Timer
 
 [Timer]
 OnCalendar=*-*-* 4:00:00

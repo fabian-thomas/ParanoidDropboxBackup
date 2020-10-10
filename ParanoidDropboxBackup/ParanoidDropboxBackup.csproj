@@ -6,8 +6,8 @@
         <UserSecretsId>420568ec-e9d2-4de3-818e-86ddf4fda7cb</UserSecretsId>
         <Version>0.0.1.0</Version>
         <Copyright>Copyright (c) 2020 Fabian Thomas</Copyright>
-        <PackageProjectUrl>https://github.com/Thomi7/ParanoidOneDriveBackup</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/Thomi7/ParanoidOneDriveBackup</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Thomi7/ParanoidDropboxBackup</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Thomi7/ParanoidDropboxBackup</RepositoryUrl>
         <Authors>Fabian Thomas</Authors>
         <PublishSingleFile>true</PublishSingleFile>
         <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
@@ -33,7 +33,10 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </EmbeddedResource>
-        <None Remove="Resources\config.json"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Remove="Resources\config.json"/>
         <EmbeddedResource Include="Resources\config.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

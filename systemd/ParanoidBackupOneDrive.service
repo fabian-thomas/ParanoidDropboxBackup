@@ -1,5 +1,5 @@
 [Unit]
-Description=ParanoidOneDriveBackup Service
+Description=ParanoidDropboxBackup Service
 
 [Service]
 Type=notify
