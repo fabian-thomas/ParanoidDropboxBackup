@@ -19,7 +19,7 @@ namespace ParanoidDropboxBackup.Authentication
             _dataProtector = dataProtector;
         }
 
-        public new string GetAuthToken()
+        public override string GetAuthToken()
         {
             if (File.Exists(_cacheFilePath))
             {

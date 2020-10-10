@@ -6,13 +6,10 @@ namespace ParanoidDropboxBackup.App
     internal static class Constants
     {
         public const string AppTitle = "ParanoidDropboxBackup";
-
         public const string ConfigFileName = "config.json";
-
         public const string IgnoreFileName = "ignore";
-
-        private const string TokenCacheFileName = "token_cache.bin3";
-
+        public const string RedirectHtmlFileName = "index.html";
+        private const string TokenCacheFileName = "token_cache";
         public const string BackupDirPrefix = "Dropbox_";
 
         /*

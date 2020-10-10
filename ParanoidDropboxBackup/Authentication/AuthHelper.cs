@@ -23,7 +23,7 @@ namespace ParanoidDropboxBackup.Authentication
             _appKey = appKey;
         }
 
-        public string GetAuthToken()
+        public virtual string GetAuthToken()
         {
             AppData.Logger.LogDebug("Getting url for authentication through OAuth2.");
 
