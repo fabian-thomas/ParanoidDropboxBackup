@@ -32,18 +32,15 @@ namespace ParanoidDropboxBackup.Dropbox
             // {
             AppData.Logger.LogInformation("Backing up Dropbox to \"{0}\"", _rootPath);
 
-            DownloadVisitor downloadVisitor;
-            if (_reportingEnabled)
-                downloadVisitor =
-                    new ReportingDownloadVisitor(AppData.Ignore, _rootPath, _reportingSteps, _dropboxClient, _ct);
-            else
-                downloadVisitor = new DownloadVisitor(AppData.Ignore, _dropboxClient, _ct, _rootPath);
+            var downloadVisitor = _reportingEnabled
+                ? new ReportingDownloadVisitor(AppData.Ignore, _rootPath, _reportingSteps, _dropboxClient, _ct)
+                : new DownloadVisitor(AppData.Ignore, _dropboxClient, _ct, _rootPath);
             await downloadVisitor.Init();
-            
+
             var iteration =
                 new IterationContentVisitor(downloadVisitor, _dropboxClient, _ct, _maxParallelDownloadTasks);
             await iteration.Iterate();
-            
+
             AppData.Logger.LogInformation("Backup finished.");
             // }
             // catch (ServiceException ex)

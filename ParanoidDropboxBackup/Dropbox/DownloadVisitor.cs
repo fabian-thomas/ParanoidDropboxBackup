@@ -35,7 +35,8 @@ namespace ParanoidDropboxBackup.Dropbox
             else
             {
                 // download file
-                var fileStream = File.Create(Path.Combine(_rootPath, file.PathDisplay.Remove(0, 1))); // remove leading slash
+                var fileStream =
+                    File.Create(Path.Combine(_rootPath, file.PathDisplay.Remove(0, 1))); // remove leading slash
 
                 var contentStream = await (await _dropboxClient.Files.DownloadAsync(file.PathLower))
                     .GetContentAsStreamAsync();
@@ -60,7 +61,8 @@ namespace ParanoidDropboxBackup.Dropbox
 
             try
             {
-                Directory.CreateDirectory(Path.Combine(_rootPath, folder.PathDisplay.Remove(0, 1))); // remove leading slash
+                Directory.CreateDirectory(Path.Combine(_rootPath,
+                    folder.PathDisplay.Remove(0, 1))); // remove leading slash
                 AppData.Logger.LogDebug("Created Directory: \"{0}\"", folder.PathLower);
             }
             catch (IOException ex)

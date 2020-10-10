@@ -23,7 +23,8 @@ namespace ParanoidDropboxBackup
                 Directory.CreateDirectory(Constants.AppDataFolderPath);
 
                 // copy config file
-                using (var reader = embeddedProvider.GetFileInfo(Path.Combine("Resources", Constants.ConfigFileName)).CreateReadStream())
+                using (var reader = embeddedProvider.GetFileInfo(Path.Combine("Resources", Constants.ConfigFileName))
+                    .CreateReadStream())
                 {
                     var fileStream = File.Create(Constants.ConfigFilePath);
                     reader.Seek(0, SeekOrigin.Begin);
@@ -34,7 +35,8 @@ namespace ParanoidDropboxBackup
                 if (!File.Exists(Constants.IgnoreFilePath))
                 {
                     // copy ignore file
-                    using var reader = embeddedProvider.GetFileInfo(Path.Combine("Resources", Constants.IgnoreFileName)).CreateReadStream();
+                    using var reader = embeddedProvider.GetFileInfo(Path.Combine("Resources", Constants.IgnoreFileName))
+                        .CreateReadStream();
                     var fileStream = File.Create(Constants.IgnoreFilePath);
                     reader.Seek(0, SeekOrigin.Begin);
                     reader.CopyTo(fileStream);
