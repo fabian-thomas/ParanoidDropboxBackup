@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Logging;
 using ParanoidDropboxBackup.App;
@@ -19,22 +20,24 @@ namespace ParanoidDropboxBackup.Authentication
             _dataProtector = dataProtector;
         }
 
-        public override string GetAuthToken()
+        public override async Task<string> GetRefreshToken()
         {
             if (File.Exists(_cacheFilePath))
             {
                 AppData.Logger.LogDebug("Found cache file.");
-                var cachedToken = Encoding.GetString(_dataProtector.Unprotect(File.ReadAllBytes(_cacheFilePath)));
-                if (!cachedToken.Equals(string.Empty))
-                    return cachedToken;
+                var cachedRefreshToken =
+                    Encoding.GetString(_dataProtector.Unprotect(await File.ReadAllBytesAsync(_cacheFilePath)));
+                if (!cachedRefreshToken.Equals(string.Empty))
+                    return cachedRefreshToken;
 
                 AppData.Logger.LogInformation("Token cache invalid. You have to reauthenticate.");
                 File.Delete(_cacheFilePath);
             }
 
-            var token = base.GetAuthToken();
+            var token = await base.GetRefreshToken();
             Directory.CreateDirectory(Path.GetDirectoryName(_cacheFilePath));
-            File.WriteAllBytes(_cacheFilePath, _dataProtector.Protect(Encoding.GetBytes(token))); // cache token
+            await File.WriteAllBytesAsync(_cacheFilePath,
+                _dataProtector.Protect(Encoding.GetBytes(token))); // cache token
             AppData.Logger.LogDebug("Cached token.");
             return token;
         }

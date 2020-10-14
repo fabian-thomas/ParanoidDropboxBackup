@@ -30,8 +30,9 @@ namespace ParanoidDropboxBackup
             try
             {
                 // Authentication
-                var token = new CachedAuthHelper(AppData.DropboxApiConfig.AppKey, Constants.TokenCacheFilePath,
-                    AppData.Protector).GetAuthToken();
+                var refreshToken = await new CachedAuthHelper(AppData.DropboxApiConfig.AppKey,
+                    Constants.TokenCacheFilePath,
+                    AppData.Protector).GetRefreshToken();
 
                 AppData.Logger.LogDebug("after authing");
 
@@ -44,7 +45,7 @@ namespace ParanoidDropboxBackup
                         if (!ct.IsCancellationRequested)
                         {
                             // directory info class is used to normalize slashes in path
-                            var dropboxHelper = new DropboxHelper(token, ct,
+                            var dropboxHelper = new DropboxHelper(refreshToken, AppData.DropboxApiConfig.AppKey, ct,
                                 new DirectoryInfo(Path.Combine(AppData.BackupConfig.Path, GetBackupDirectoryName()))
                                     .FullName, AppData.BackupConfig.MaxParallelDownloadTasks,
                                 AppData.BackupConfig.ProgressReporting.ProgressReportingSteps,

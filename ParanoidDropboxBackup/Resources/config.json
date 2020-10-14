@@ -12,7 +12,10 @@
     */
     "MaxParallelDownloadTasks": 10,
     "ProgressReporting": {
-      "Enabled": true,
+      /*
+      Only use this if your Dropbox is small or if you do not care about a delay when the backup starts
+      */
+      "Enabled": false,
       /*
       0.05 means the progress is reported in 5% steps
       */

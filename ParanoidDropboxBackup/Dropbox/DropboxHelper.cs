@@ -15,10 +15,10 @@ namespace ParanoidDropboxBackup.Dropbox
         private readonly decimal _reportingSteps;
         private readonly string _rootPath;
 
-        public DropboxHelper(string token, CancellationToken ct,
+        public DropboxHelper(string refreshToken, string appKey, CancellationToken ct,
             string rootPath, uint maxParallelDownloadTasks, decimal reportingSteps, bool reportingEnabled)
         {
-            _dropboxClient = new DropboxClient(token);
+            _dropboxClient = new DropboxClient(refreshToken, appKey);
             _ct = ct;
             _rootPath = rootPath;
             _maxParallelDownloadTasks = maxParallelDownloadTasks;
@@ -28,8 +28,6 @@ namespace ParanoidDropboxBackup.Dropbox
 
         public async Task DownloadAll()
         {
-            // try
-            // {
             AppData.Logger.LogInformation("Backing up Dropbox to \"{0}\"", _rootPath);
 
             var downloadVisitor = _reportingEnabled
@@ -42,12 +40,6 @@ namespace ParanoidDropboxBackup.Dropbox
             await iteration.Iterate();
 
             AppData.Logger.LogInformation("Backup finished.");
-            // }
-            // catch (ServiceException ex)
-            // {
-            //     AppData.Logger.LogCritical("Could not get root item of OneDrive. Nothing could be downloaded.\n{0}",
-            //         ex);
-            // }
         }
     }
 }
