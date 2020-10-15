@@ -24,7 +24,7 @@ Copy the two systemd files (.service, .timer) to `/etc/systemd/system` and modif
 
 Start the service with `systemctl start ParanoidDropboxBackup.service` and check that there are no errors in the log with `journalctl -u ParanoidDropboxBackup`. Optionally: Stop the service with `systemctl stop ParanoidDropboxBackup.service` 
 
-Enable the timer service with `systemctl enable ParanoidOneDriveBackup.timer`. Systemd automatically starts the timer again on system startup.
+Enable the timer service with `systemctl enable ParanoidDropboxBackup.timer`. Systemd automatically starts the timer again on system startup.
 
 ## Configuration
 
