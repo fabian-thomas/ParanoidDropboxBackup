@@ -28,11 +28,6 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </EmbeddedResource>
-        <None Remove="Resources\index.html"/>
-        <EmbeddedResource Include="Resources\index.html">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
