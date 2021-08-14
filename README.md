@@ -48,7 +48,7 @@ You can try using my registered app with the app key: `wj2nybspqjdtnvd`
 
 If this app key does not work for you, you can register your own app following in the Dropbox [App Console](https://www.dropbox.com/developers/apps) and these instructions:
 
-You need to specify the necessary scopes of your the application. You can do that in the "Permissions" tab. Select all permissions in the [Permissions](#permsissions) section of this readme.
+You need to specify the necessary scopes of your the application. You can do that in the "Permissions" tab. Select all permissions in the [Permissions](#permissions) section of this readme.
 
 Finally copy the app key in the "Settings" tab and insert it into your config file.
 
